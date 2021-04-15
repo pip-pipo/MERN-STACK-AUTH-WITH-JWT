@@ -1,5 +1,6 @@
 import UserSchema from "../models/UserSchema.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const registrationUser = async (req, res) => {
   const { name, email, phone, work, password, cpassword } = req.body;
@@ -33,6 +34,7 @@ const registrationUser = async (req, res) => {
 
 const SignIn = async (req, res) => {
   try {
+    let token;
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ msg: "please fille all the fields" });
@@ -41,6 +43,14 @@ const SignIn = async (req, res) => {
 
     if (userSingin) {
       const isMatch = await bcrypt.compare(password, userSingin.password);
+      const token = await userSingin.generateAuthToken();
+      console.log(token);
+
+      res.cookie("jwtToken",token,{
+        expires:new Date(Date.now() + 25892000000),
+        httpOnly:true,secure: false,sameSite: "Lax"
+      })
+
       if (!isMatch) {
         res.status(400).json({ error: "Invalid Cridentials" });
       } else {
@@ -54,7 +64,15 @@ const SignIn = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
 export const controller = {
   registrationUser,
   SignIn,
+  
 };
