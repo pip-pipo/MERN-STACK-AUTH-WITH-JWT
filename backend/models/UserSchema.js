@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
+import  jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+dotenv.config();
 
 const users = mongoose.Schema({
   name: {
@@ -22,12 +25,24 @@ const users = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    trim:true,
+    minHeight: 4,
   },
 
   cpassword: {
     type: String,
     required: true,
+    trim:true,
+    minHeight: 4,
   },
+  tokens:[
+    {
+      token:{
+        type:String,
+        required:true,
+      }
+    }
+  ]
 });
 
 users.pre('save',async function(next){
@@ -37,6 +52,21 @@ users.pre('save',async function(next){
     }
     next();
 })
+
+
+// generateAuth jwt Token 
+
+users.methods.generateAuthToken =async function(){
+try {
+  let token = jwt.sign({_id:this._id},process.env.SECRECT_KEY);
+  this.tokens  = this.tokens.concat({token:token});
+  await this.save();
+  return token;
+} catch (err) {
+  console.log(err)
+}
+}
+
 
 const UserSchema = mongoose.model("usersSchema", users);
 export default UserSchema;
