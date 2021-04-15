@@ -22,11 +22,15 @@ const users = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    trim:true,
+    minHeight: 4,
   },
 
   cpassword: {
     type: String,
     required: true,
+    trim:true,
+    minHeight: 4,
   },
 });
 
