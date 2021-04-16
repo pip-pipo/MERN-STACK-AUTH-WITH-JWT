@@ -56,8 +56,6 @@ const SignIn = async (req, res) => {
         httpOnly:true,secure: false,sameSite: "Lax"
       })
 
-
-
       if (!isMatch) {
         res.status(400).json({ error: "Invalid Cridentials" });
       } else {
