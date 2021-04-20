@@ -40,21 +40,21 @@ const SignIn = async (req, res) => {
       return res.status(400).json({ msg: "please fille all the fields" });
     }
 
-    const userSingin =await UserSchema.findOne({ email: email });
-    if(!userSingin){
-        res.status(400).json({error:"user not Exists"})
+    const userSingin = await UserSchema.findOne({ email: email });
+    if (!userSingin) {
+      res.status(400).json({ error: "user not Exists" });
     }
- 
-   
+
     if (userSingin) {
       const isMatch = await bcrypt.compare(password, userSingin.password);
       const token = await userSingin.generateAuthToken();
       console.log(token);
 
-      res.cookie("jwtToken",token,{
-        expires:new Date(Date.now() + 25892000000),
-        httpOnly:true,secure: false,sameSite: "Lax"
-      })
+      res.cookie("jwtToken", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true,
+        secure: false,
+      });
 
       if (!isMatch) {
         res.status(400).json({ error: "Invalid Cridentials" });
@@ -70,14 +70,13 @@ const SignIn = async (req, res) => {
 };
 
 
-
-
-
-
+const about = (req, res) => {
+    res.send(req.rootUser)
+};
 
 
 export const controller = {
   registrationUser,
   SignIn,
-  
+  about,
 };
