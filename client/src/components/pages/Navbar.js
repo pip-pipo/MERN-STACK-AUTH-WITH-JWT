@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({ condition }) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,16 +26,36 @@ const Navbar = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
-                  About
-                </NavLink>
-              </li>
+              {condition ? (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/about">
+                    About
+                  </NavLink>
+                </li>
+              ) : null}
+
+              {condition ? (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/upload">
+                    Upload Memories
+                  </NavLink>
+                </li>
+              ) : null}
+
+              {condition ? (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/showMemories">
+                    show Memories
+                  </NavLink>
+                </li>
+              ) : null}
+
               <li className="nav-item">
                 <NavLink className="nav-link" to="/contact">
                   Conatct
                 </NavLink>
               </li>
+
               <li className="nav-item">
                 <NavLink className="nav-link" to="/login">
                   Sing In

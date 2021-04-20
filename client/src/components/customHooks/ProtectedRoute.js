@@ -4,7 +4,6 @@ import { Redirect, Route } from "react-router-dom";
 
 
 const ProtectedRoute = ({ component, path, exact,condition }) => {
-console.log(exact)
 
   return condition ? (
     <Route component={component} path={path} exact={exact} />

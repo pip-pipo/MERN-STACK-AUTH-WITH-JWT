@@ -26,24 +26,25 @@ useEffect(()=>{
 console.log(userData)
 
   return (
+    userData?
     <div>
       <div class="row p-4 shadow m-auto">
-        <div class="col-4">
+        <div class="col-md-4 text-center">
           <img
             className="rounded-1 w-75"
             src="https://avatars.githubusercontent.com/u/69667157?v=4"
             alt="hlw"
           />
         </div>
-        <div class="col-4">
-          <h3>Morsalin</h3>
-          <div>user Id : </div>
-          <div>Name : Morsalin</div>
-          <div>Email : morsalin@gmail.com</div>
-          <div>Phone : 054545453</div>
-          <div>Proffesstion : Web Developer</div>
+        <div class="my-3 text-center col-md-3">
+          <h3>User Details</h3>
+          <div>user Id : {userData._id} </div>
+          <div>Name : {userData.name}</div>
+          <div>Email : {userData.email}</div>
+          <div>Phone : {userData.phone}</div>
+          <div>Proffesstion : {userData.work}</div>
         </div>
-        <div class="col-4">
+        <div class="col-md-2 text-center">
           <h3>links</h3>
           <div>Facebook</div>
           <div>instagram</div>
@@ -52,7 +53,7 @@ console.log(userData)
           <div>Github</div>
         </div>
       </div>
-    </div>
+    </div>:"loading..."
   );
 };
 
